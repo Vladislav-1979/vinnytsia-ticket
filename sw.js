@@ -1,4 +1,4 @@
-const CACHE = 'vinnytsia-ticket-v2';
+const CACHE = 'vinnytsia-ticket-v3';
 const ASSETS = [
   './',
   './index.html',
