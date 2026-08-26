@@ -1209,44 +1209,43 @@
   document.getElementById('dateVal').textContent = kyiv.day + '.' + kyiv.month + '.' + kyiv.year;
   document.getElementById('timeVal').textContent = kyiv.hour + ':' + kyiv.minute + ':' + kyiv.second;
 
-  // ---------- Countdown (absolute end time — continues in background / screen off) ----------
+  // ---------- Countdown (absolute end time) ----------
+  // The clock is based on an absolute timestamp, not on the number of interval ticks.
+  // Browser/OS may pause JavaScript while the app is hidden or the screen is off;
+  // when execution resumes, the remaining time is recalculated from Date.now().
   var countdownEl = document.getElementById('countdown');
   var COUNTDOWN_SECONDS = 60 * 60;
-  var endAt = Date.now() + COUNTDOWN_SECONDS * 1000;
+  var COUNTDOWN_KEY = 'vinnytsia_ticket_countdown_end_at';
+  var savedEnd = Number(sessionStorage.getItem(COUNTDOWN_KEY));
+  var endAt = (Number.isFinite(savedEnd) && savedEnd > Date.now()) ? savedEnd : Date.now() + COUNTDOWN_SECONDS * 1000;
+  sessionStorage.setItem(COUNTDOWN_KEY, String(endAt));
   var timer = null;
   function getRemaining(){
-    return Math.max(0, Math.floor((endAt - Date.now()) / 1000));
+    return Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
   }
   function renderCountdown(){
     var remaining = getRemaining();
     var m = Math.floor(remaining / 60);
-    var s = remaining % 60;
-    var text = pad(m) + ':' + pad(s);
-    if(countdownEl.textContent !== text){
-      countdownEl.textContent = text;
+    var sec = remaining % 60;
+    countdownEl.textContent = pad(m) + ':' + pad(sec);
+    if(remaining <= 0 && timer){
+      clearInterval(timer);
+      timer = null;
     }
     return remaining;
-  }
-  function tickCountdown(){
-    var remaining = renderCountdown();
-    if(remaining <= 0){
-      if(timer){ clearInterval(timer); timer = null; }
-    }
   }
   function startCountdown(){
     if(timer) clearInterval(timer);
     renderCountdown();
-    timer = setInterval(tickCountdown, 250); // frequent tick so UI stays accurate after throttle
+    if(getRemaining() > 0) timer = setInterval(renderCountdown, 500);
   }
-  // Auto-start; recalculate when tab/app becomes visible again (screen on / switch back)
   startCountdown();
   document.addEventListener('visibilitychange', function(){
     renderCountdown();
-    if(!document.hidden && getRemaining() > 0 && !timer){
-      startCountdown();
-    }
+    if(document.visibilityState === 'visible' && getRemaining() > 0) startCountdown();
   });
-  window.addEventListener('pageshow', function(){ renderCountdown(); });
+  window.addEventListener('pageshow', renderCountdown);
+  window.addEventListener('focus', renderCountdown);
   countdownEl.addEventListener('click', function(){ /* no reset */ });
 
   // ---------- QR code (ticket) ----------
@@ -1316,28 +1315,26 @@
       date: pad(yesterday.getUTCDate())+'.'+pad(yesterday.getUTCMonth()+1)+'.'+yesterday.getUTCFullYear()
     };
   }
-  // Upper block: random time 07:00:00 – 21:59:59; lower: 1h–1.5h earlier (same date)
+  // Upper block: random time 07:00:00–21:59:59.
+  // Lower block is exactly 60–90 minutes earlier, including seconds.
   function makeArchiveStamps(){
     var d = yesterdayKyivDate();
-    // upper: ensure room to subtract 90 min → start from 08:30 minimum effectively, but clamp lower to >= 07:00
-    var upperTotalMin = 7*60 + Math.floor(Math.random() * (15*60)); // 07:00 .. 21:59 in minutes from midnight-ish
-    // better: 7*60 to 21*60+59
-    upperTotalMin = 7*60 + Math.floor(Math.random() * ((21*60+59) - 7*60 + 1));
-    var upperSec = Math.floor(Math.random()*60);
-    var deltaMin = 60 + Math.floor(Math.random()*31); // 60..90 minutes earlier
-    var lowerTotalMin = upperTotalMin - deltaMin;
-    if(lowerTotalMin < 7*60) lowerTotalMin = 7*60;
-    var lowerSec = Math.floor(Math.random()*60);
-    function fmt(totalMin, sec){
-      var hh = Math.floor(totalMin / 60);
-      var mi = totalMin % 60;
-      return pad(hh)+':'+pad(mi)+':'+pad(sec);
+    var minSec = 7 * 60 * 60;
+    var maxSec = 21 * 60 * 60 + 59 * 60 + 59;
+    var upperSec = minSec + Math.floor(Math.random() * (maxSec - minSec + 1));
+    var deltaSec = (60 * 60) + Math.floor(Math.random() * (30 * 60 + 1));
+    var lowerSec = upperSec - deltaSec;
+    function fmt(totalSec){
+      // JavaScript Date is not used here: values may legitimately be before 07:00.
+      // The requested constraint applies to the upper time.
+      if(totalSec < 0) totalSec += 24 * 60 * 60;
+      totalSec %= 24 * 60 * 60;
+      var hh = Math.floor(totalSec / 3600);
+      var mi = Math.floor((totalSec % 3600) / 60);
+      var ss = totalSec % 60;
+      return pad(hh)+':'+pad(mi)+':'+pad(ss);
     }
-    return {
-      date: d.date,
-      time1: fmt(upperTotalMin, upperSec),
-      time2: fmt(lowerTotalMin, lowerSec)
-    };
+    return { date:d.date, time1:fmt(upperSec), time2:fmt(lowerSec) };
   }
   var stamps = makeArchiveStamps();
   document.getElementById('archDate1').textContent = stamps.date;
@@ -1380,6 +1377,14 @@
   var mediaStream = null;
   var rafId = null;
   var scanning = false;
+  var barcodeDetector = null;
+  if('BarcodeDetector' in window){
+    try {
+      if(!BarcodeDetector.getSupportedFormats || BarcodeDetector.getSupportedFormats().then) {
+        barcodeDetector = new BarcodeDetector({formats:['qr_code']});
+      }
+    } catch(e) {}
+  }
 
   function stopStream(){
     if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
@@ -1401,33 +1406,43 @@
 
   function tick(){
     if(!scanning) return;
-    try {
-      if(video.readyState >= video.HAVE_ENOUGH_DATA && video.videoWidth > 0 && window.jsQR){
-        var vw = video.videoWidth;
-        var vh = video.videoHeight;
-        // downscale for speed on high-res cameras
-        var maxW = 640;
-        var scale = vw > maxW ? maxW / vw : 1;
-        var cw = Math.floor(vw * scale);
-        var ch = Math.floor(vh * scale);
-        scanCanvas.width = cw;
-        scanCanvas.height = ch;
-        scanCtx.drawImage(video, 0, 0, cw, ch);
-        var imageData = scanCtx.getImageData(0, 0, cw, ch);
-        var code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: 'attemptBoth'
-        });
-        if(code && code.data){
-          scanning = false;
-          resultText.textContent = code.data;
-          resultBox.style.display = 'block';
-          hint.style.display = 'none';
-          stopStreamKeepOpen();
-          return;
-        }
+    if(video.readyState >= video.HAVE_ENOUGH_DATA && video.videoWidth > 0){
+      if(barcodeDetector){
+        barcodeDetector.detect(video).then(function(codes){
+          if(codes && codes.length && codes[0].rawValue){
+            handleScanResult(codes[0].rawValue);
+            return;
+          }
+          fallbackJsQR();
+        }).catch(function(){ fallbackJsQR(); });
+      } else {
+        fallbackJsQR();
       }
-    } catch(e){ console.warn('scan tick', e); }
-    rafId = requestAnimationFrame(tick);
+    }
+    if(scanning) rafId = requestAnimationFrame(tick);
+  }
+
+  function fallbackJsQR(){
+    if(!window.jsQR || !scanning) return;
+    try {
+      var vw=video.videoWidth, vh=video.videoHeight, maxW=800;
+      var scale=vw>maxW ? maxW/vw : 1;
+      var cw=Math.max(1,Math.floor(vw*scale)), ch=Math.max(1,Math.floor(vh*scale));
+      scanCanvas.width=cw; scanCanvas.height=ch;
+      scanCtx.drawImage(video,0,0,cw,ch);
+      var imageData=scanCtx.getImageData(0,0,cw,ch);
+      var code=jsQR(imageData.data,cw,ch,{inversionAttempts:'attemptBoth'});
+      if(code && code.data) handleScanResult(code.data);
+    } catch(e) { console.warn('scan tick',e); }
+  }
+
+  function handleScanResult(data){
+    if(!scanning) return;
+    scanning=false;
+    resultText.textContent=data;
+    resultBox.style.display='block';
+    hint.style.display='none';
+    stopStreamKeepOpen();
   }
 
   function stopStreamKeepOpen(){
@@ -1520,7 +1535,7 @@
         });
       }
     }).then(function(){
-      return navigator.serviceWorker.register('sw.js?v=3');
+      return navigator.serviceWorker.register('sw.js?v=4');
     }).catch(function(e){ console.log('SW reg failed', e); });
   }
 
