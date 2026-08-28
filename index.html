@@ -593,8 +593,6 @@
     color:var(--white);
     flex:0 0 auto;
   }
-  .clickable-services-title{cursor:pointer;user-select:none;}
-  .clickable-services-title:active{opacity:.75;}
   .fx-card{
     background:var(--card);
     border:1px solid var(--line);
@@ -757,108 +755,6 @@
     color:var(--brand);
   }
 
-
-  /* ---------- Payment screen ---------- */
-  #paymentOverlay{
-    position:absolute;
-    inset:0;
-    z-index:45;
-    background:#14171a;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-    transform:translateX(100%);
-    transition:transform .32s cubic-bezier(.4,0,.2,1);
-    padding:calc(10px + env(safe-area-inset-top)) 24px calc(10px + env(safe-area-inset-bottom));
-  }
-  #paymentOverlay.open{ transform:translateX(0); }
-  .payment-topbar{
-    height:24px;
-    flex:0 0 24px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-  }
-  .payment-close{
-    width:22px;height:22px;
-    border:0;background:transparent;color:#f5f6f5;
-    padding:0;display:flex;align-items:center;justify-content:center;
-    cursor:pointer;
-  }
-  .payment-close svg{width:14px;height:14px;display:block;}
-  .payment-share{
-    width:25px;height:25px;border-radius:50%;
-    border:0;background:#3b3f42;color:#f5f6f5;
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;
-    margin-top:-1px;
-  }
-  .payment-share svg{width:14px;height:14px;display:block;}
-  .payment-heading{
-    display:flex;flex-direction:column;align-items:center;
-    flex:0 0 auto;
-    margin-top:0;
-  }
-  .payment-machine{
-    width:28px;height:28px;border-radius:50%;
-    overflow:hidden;background:#25234d;
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:7px;
-  }
-  .payment-machine img{width:28px;height:28px;object-fit:cover;display:block;}
-  .payment-title{
-    font-size:11.5px;line-height:1.1;font-weight:400;
-    color:#f5f6f5;text-align:center;margin:0;
-  }
-  .payment-content{
-    width:100%;
-    display:flex;flex-direction:column;
-    gap:15px;
-    margin-top:15px;
-    overflow:hidden;
-  }
-  .payment-block{
-    width:100%;background:#1c1c1c;border-radius:12px;
-    border:1px solid #252525;color:#f5f6f5;
-    flex:0 0 auto;
-  }
-  .payment-amount{
-    height:57px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-  }
-  .payment-amount-value{font-size:12.5px;font-weight:500;line-height:1.1;}
-  .payment-datetime{font-size:9px;color:#8e9090;margin-top:5px;font-variant-numeric:tabular-nums;}
-  .payment-status{height:94px;padding:12px 10px;display:flex;flex-direction:column;justify-content:flex-start;}
-  .payment-line{display:flex;align-items:center;justify-content:space-between;font-size:9.5px;line-height:1.15;}
-  .payment-label{color:#a0a2a2;font-weight:400;}
-  .payment-value{color:#f5f6f5;font-weight:400;text-align:right;}
-  .payment-card-label{margin-top:12px;}
-  .payment-card-number{margin-top:6px;justify-content:flex-start;gap:8px;}
-  .payment-card-number .visa{font-weight:800;font-style:italic;font-size:9.5px;color:#fff;}
-  .payment-card-number .masked{font-size:9.5px;letter-spacing:0.4px;}
-  .payment-card-caption{margin-top:6px;font-size:9.5px;color:#f5f6f5;}
-  .payment-arrow{color:#4EA524;display:flex;align-items:center;justify-content:center;}
-  .payment-arrow svg{width:14px;height:14px;}
-  .payment-balance{height:45px;padding:0 10px;display:flex;align-items:center;}
-  .payment-eye{color:#4EA524;display:flex;align-items:center;justify-content:center;}
-  .payment-eye svg{width:16px;height:16px;}
-  .payment-category{height:38px;padding:0 10px;display:flex;align-items:center;}
-  .payment-help{height:49px;padding:0 10px;display:flex;align-items:center;}
-  .payment-help-icon{width:25px;height:25px;border-radius:50%;background:rgba(78,165,36,.18);display:flex;align-items:center;justify-content:center;margin-right:12px;flex:0 0 auto;}
-  .payment-help-icon svg{width:14px;height:14px;color:#4EA524;}
-  .payment-help-text{font-size:9.5px;color:#f5f6f5;}
-  @media (max-height:700px){
-    #paymentOverlay{padding-left:18px;padding-right:18px;}
-    .payment-content{margin-top:10px;gap:10px;}
-    .payment-amount{height:57px;}
-    .payment-status{height:94px;padding:12px 10px;}
-    .payment-balance{height:45px;}
-    .payment-category{height:38px;}
-    .payment-help{height:49px;}
-    .payment-line,.payment-card-caption,.payment-card-number .masked,.payment-card-number .visa{font-size:9.5px;}
-    .payment-datetime{font-size:9px;margin-top:5px;}
-  }
-
 </style>
 </head>
 <body>
@@ -867,7 +763,7 @@
 
     <!-- ============ PAGE 0: Ще сервіси ============ -->
     <div class="page" id="pageServices">
-      <div class="services-title clickable-services-title" id="servicesTitle" role="button" tabindex="0">Ще сервіси</div>
+      <div class="services-title">Ще сервіси</div>
 
       <div class="fx-card">
         <div class="fx-top"><span>Курс валют для карток</span><span class="buy">Купити &rsaquo;</span></div>
@@ -1087,48 +983,6 @@
 
   </div>
 
-
-  <!-- Payment screen -->
-  <div id="paymentOverlay" aria-hidden="true">
-    <div class="payment-topbar">
-      <button class="payment-close" id="paymentClose" aria-label="Закрити">
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l20 20M26 6L6 26"/></svg>
-      </button>
-      <button class="payment-share" aria-label="Поділитися">
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="23.5" cy="7.5" r="3.2"/><circle cx="8.5" cy="16" r="3.2"/><circle cx="23.5" cy="24.5" r="3.2"/>
-          <path d="M11.4 14.6l9.2-5.1M11.4 17.4l9.2 5.1"/>
-        </svg>
-      </button>
-    </div>
-    <div class="payment-heading">
-      <div class="payment-machine"><img src="machine.png" alt="Міський транспорт"></div>
-      <h1 class="payment-title">Міський транспорт</h1>
-    </div>
-    <div class="payment-content">
-      <div class="payment-block payment-amount">
-        <div class="payment-amount-value">−25.00 UAH</div>
-        <div class="payment-datetime" id="paymentDateTime">24.08.2026, 17:45</div>
-      </div>
-      <div class="payment-block payment-status">
-        <div class="payment-line"><span class="payment-label">Статус</span><span class="payment-value">Успішно</span></div>
-        <div class="payment-label payment-card-label">З картки</div>
-        <div class="payment-line payment-card-number"><span><span class="visa">VISA</span> <span class="masked">4149 · · · · · · · · 7621</span></span><span class="payment-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span></div>
-        <div class="payment-card-caption">Картка для виплат</div>
-      </div>
-      <div class="payment-block payment-balance">
-        <div class="payment-line" style="width:100%;"><span class="payment-label">Залишок</span><span class="payment-value" style="display:flex;align-items:center;gap:10px;">······· UAH <span class="payment-eye"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20s6-10 16-10 16 10 16 10-6 10-16 10S4 20 4 20z"/><circle cx="20" cy="20" r="4"/><path d="M5 5l30 30"/></svg></span></span></div>
-      </div>
-      <div class="payment-block payment-category">
-        <div class="payment-line" style="width:100%;"><span class="payment-label">Категорія</span><span class="payment-value">Транспорт</span></div>
-      </div>
-      <div class="payment-block payment-help">
-        <div class="payment-help-icon"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 4C8.3 4 2 9.2 2 15.7c0 3.6 1.9 6.9 5 9.1L5.7 28l4.6-1.5c1.8.6 3.7.9 5.7.9 7.7 0 14-5.2 14-11.7S23.7 4 16 4zm-5.1 10.3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5.1 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm5.1 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg></div>
-        <div class="payment-help-text">Допомога Онлайн</div>
-      </div>
-    </div>
-  </div>
-
   <div class="scanner-overlay" id="scannerOverlay" style="position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
     <video id="scannerVideo" autoplay playsinline muted style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
     <div style="position:absolute;top:calc(14px + env(safe-area-inset-top));left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:3;">
@@ -1210,36 +1064,6 @@
   document.getElementById('backFromTransport').addEventListener('click', function(){ setPage(0); });
   document.getElementById('cityTransportRow').addEventListener('click', function(){ setPage(2); });
   document.getElementById('svcTransportTile').addEventListener('click', function(){ setPage(1); });
-
-  // ---------- Payment screen ----------
-  var paymentOverlay = document.getElementById('paymentOverlay');
-  var paymentClose = document.getElementById('paymentClose');
-  var paymentDateTime = document.getElementById('paymentDateTime');
-  function applyArchiveStamps(stamps){
-    document.getElementById('archDate1').textContent = stamps.date;
-    document.getElementById('archTime1').textContent = stamps.time1;
-    document.getElementById('archDate2').textContent = stamps.date;
-    document.getElementById('archTime2').textContent = stamps.time2;
-    if(paymentDateTime) paymentDateTime.textContent = stamps.date + ', ' + stamps.time1.slice(0,5);
-  }
-  function openPayment(){
-    // Use the single timestamp captured when this app instance started.
-    // It stays identical across every Payment/Archive visit until the app is closed.
-    applyArchiveStamps(stamps);
-    paymentOverlay.classList.add('open');
-    paymentOverlay.setAttribute('aria-hidden','false');
-  }
-  function closePaymentToArchive(){
-    paymentOverlay.classList.remove('open');
-    paymentOverlay.setAttribute('aria-hidden','true');
-    setPage(2);
-  }
-  var servicesTitle = document.getElementById('servicesTitle');
-  if(servicesTitle){
-    servicesTitle.addEventListener('click', openPayment);
-    servicesTitle.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openPayment(); } });
-  }
-  if(paymentClose) paymentClose.addEventListener('click', closePaymentToArchive);
 
   // ---------- Tabs (block 1): sliding highlight + screen transition ----------
   var tabsWrap = document.querySelector('.tabs');
@@ -1385,45 +1209,43 @@
   document.getElementById('dateVal').textContent = kyiv.day + '.' + kyiv.month + '.' + kyiv.year;
   document.getElementById('timeVal').textContent = kyiv.hour + ':' + kyiv.minute + ':' + kyiv.second;
 
-  // ---------- Countdown (absolute end time — continues in background / screen off) ----------
+  // ---------- Countdown: real elapsed time, survives tab switches/screen lock while page lives ----------
   var countdownEl = document.getElementById('countdown');
   var COUNTDOWN_SECONDS = 60 * 60;
+  // Deliberately keep this only in memory. If the page/app is really closed, a new
+  // page instance gets a fresh countdown. If the OS merely suspends the page,
+  // Date.now() catches the elapsed time when it wakes up.
   var endAt = Date.now() + COUNTDOWN_SECONDS * 1000;
   var timer = null;
+
   function getRemaining(){
-    return Math.max(0, Math.floor((endAt - Date.now()) / 1000));
+    return Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
   }
   function renderCountdown(){
     var remaining = getRemaining();
     var m = Math.floor(remaining / 60);
     var s = remaining % 60;
-    var text = pad(m) + ':' + pad(s);
-    if(countdownEl.textContent !== text){
-      countdownEl.textContent = text;
-    }
+    countdownEl.textContent = pad(m) + ':' + pad(s);
     return remaining;
   }
   function tickCountdown(){
-    var remaining = renderCountdown();
-    if(remaining <= 0){
+    if(renderCountdown() <= 0){
       if(timer){ clearInterval(timer); timer = null; }
     }
   }
   function startCountdown(){
     if(timer) clearInterval(timer);
-    renderCountdown();
-    timer = setInterval(tickCountdown, 250); // frequent tick so UI stays accurate after throttle
+    tickCountdown();
+    if(getRemaining() > 0) timer = setInterval(tickCountdown, 250);
   }
-  // Auto-start; recalculate when tab/app becomes visible again (screen on / switch back)
   startCountdown();
   document.addEventListener('visibilitychange', function(){
-    renderCountdown();
-    if(!document.hidden && getRemaining() > 0 && !timer){
-      startCountdown();
-    }
+    // Do not reset on background/foreground. Recalculate from the absolute end time.
+    tickCountdown();
+    if(!document.hidden && getRemaining() > 0 && !timer) startCountdown();
   });
-  window.addEventListener('pageshow', function(){ renderCountdown(); });
-  countdownEl.addEventListener('click', function(){ /* no reset */ });
+  window.addEventListener('pageshow', tickCountdown);
+  window.addEventListener('focus', tickCountdown);
 
   // ---------- QR code (ticket) ----------
   var qrContainer = document.getElementById('qrcode');
@@ -1481,21 +1303,40 @@
   document.getElementById('archSerial2').textContent = randomDigits(9);
   document.getElementById('archWagon2').textContent = randomWagon();
 
-  // ---------- Shared app timestamp (real Europe/Kyiv time, fixed until app exit) ----------
-  // Capture the actual Kyiv date/time once when this app instance starts.
-  // All Archive and Payment visits reuse exactly the same timestamp.
-  var appTimestamp = getKyivParts(new Date());
-  function makeArchiveStamps(){
-    var date = appTimestamp.day + '.' + appTimestamp.month + '.' + appTimestamp.year;
-    var time = appTimestamp.hour + ':' + appTimestamp.minute + ':' + appTimestamp.second;
+  function yesterdayKyivDate(){
+    var now = getKyivParts();
+    var todayUTC = Date.UTC(parseInt(now.year,10), parseInt(now.month,10)-1, parseInt(now.day,10));
+    var yesterday = new Date(todayUTC - 24*60*60*1000);
     return {
-      date: date,
-      time1: time,
-      time2: time
+      yy: yesterday.getUTCFullYear(),
+      mm: pad(yesterday.getUTCMonth()+1),
+      dd: pad(yesterday.getUTCDate()),
+      date: pad(yesterday.getUTCDate())+'.'+pad(yesterday.getUTCMonth()+1)+'.'+yesterday.getUTCFullYear()
     };
   }
+  // Upper block: random time 07:00:00–21:59:59.
+  // Lower block is ALWAYS exactly 60–90 minutes earlier.
+  // Therefore the lower time may be earlier than 07:00 when the upper time is early;
+  // the requirement is the 60–90 minute difference, not a second lower bound.
+  function makeArchiveStamps(){
+    var d = yesterdayKyivDate();
+    var upperSecOfDay = (7 * 3600) + Math.floor(Math.random() * ((21 * 3600 + 59 * 60 + 59) - (7 * 3600) + 1));
+    var delta = (60 * 60) + Math.floor(Math.random() * (30 * 60 + 1)); // 60:00–90:00
+    var lowerSecOfDay = upperSecOfDay - delta;
+    function fmt(total){
+      var hh = Math.floor(total / 3600);
+      var rest = total % 3600;
+      var mi = Math.floor(rest / 60);
+      var ss = rest % 60;
+      return pad(hh) + ':' + pad(mi) + ':' + pad(ss);
+    }
+    return {date:d.date, time1:fmt(upperSecOfDay), time2:fmt(lowerSecOfDay), delta:delta};
+  }
   var stamps = makeArchiveStamps();
-  applyArchiveStamps(stamps);
+  document.getElementById('archDate1').textContent = stamps.date;
+  document.getElementById('archTime1').textContent = stamps.time1;
+  document.getElementById('archDate2').textContent = stamps.date;
+  document.getElementById('archTime2').textContent = stamps.time2;
 
   // ---------- Placeholders for future screens ----------
 
@@ -1526,139 +1367,122 @@
   var resultBox = document.getElementById('scannerResult');
   var resultText = document.getElementById('scannerResultText');
   var rescanBtn = document.getElementById('scannerRescan');
-
   var scanCanvas = document.createElement('canvas');
-  var scanCtx = scanCanvas.getContext('2d', { willReadFrequently: true });
-  var mediaStream = null;
-  var rafId = null;
-  var scanning = false;
+  var scanCtx = scanCanvas.getContext('2d', {willReadFrequently:true});
+  var mediaStream = null, rafId = null, scanning = false, detector = null;
 
   function stopStream(){
-    if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
-    if(mediaStream){
-      mediaStream.getTracks().forEach(function(t){ t.stop(); });
-      mediaStream = null;
-    }
-    video.srcObject = null;
     scanning = false;
+    if(rafId){cancelAnimationFrame(rafId); rafId=null;}
+    if(mediaStream){mediaStream.getTracks().forEach(function(t){t.stop();}); mediaStream=null;}
+    video.srcObject=null;
   }
-
   function closeScanner(){
     stopStream();
     overlay.classList.remove('open');
-    overlay.style.display = 'none';
-    resultBox.style.display = 'none';
-    hint.style.display = '';
+    overlay.style.display='none';
+    resultBox.style.display='none';
+    hint.style.display='';
   }
-
-  function tick(){
-    if(!scanning) return;
-    try {
-      if(video.readyState >= video.HAVE_ENOUGH_DATA && video.videoWidth > 0 && window.jsQR){
-        var vw = video.videoWidth;
-        var vh = video.videoHeight;
-        // downscale for speed on high-res cameras
-        var maxW = 640;
-        var scale = vw > maxW ? maxW / vw : 1;
-        var cw = Math.floor(vw * scale);
-        var ch = Math.floor(vh * scale);
-        scanCanvas.width = cw;
-        scanCanvas.height = ch;
-        scanCtx.drawImage(video, 0, 0, cw, ch);
-        var imageData = scanCtx.getImageData(0, 0, cw, ch);
-        var code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: 'attemptBoth'
-        });
-        if(code && code.data){
-          scanning = false;
-          resultText.textContent = code.data;
-          resultBox.style.display = 'block';
-          hint.style.display = 'none';
-          stopStreamKeepOpen();
-          return;
-        }
-      }
-    } catch(e){ console.warn('scan tick', e); }
-    rafId = requestAnimationFrame(tick);
-  }
-
-  function stopStreamKeepOpen(){
-    if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
-    if(mediaStream){
-      mediaStream.getTracks().forEach(function(t){ t.stop(); });
-      mediaStream = null;
-    }
-  }
-
   function showError(msg){
-    hint.style.display = '';
-    hint.textContent = msg;
+    hint.style.display='';
+    hint.textContent=msg;
+  }
+  function showResult(text){
+    scanning=false;
+    resultText.textContent=text;
+    resultBox.style.display='block';
+    hint.style.display='none';
+    if(rafId){cancelAnimationFrame(rafId); rafId=null;}
+    if(mediaStream){mediaStream.getTracks().forEach(function(t){t.stop();}); mediaStream=null;}
   }
 
-  function openScanner(){
-    overlay.style.display = 'flex';
-    overlay.classList.add('open');
-    resultBox.style.display = 'none';
-    hint.style.display = '';
-    hint.textContent = 'Наведіть камеру на QR-код';
-    scanning = false;
-    if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
+  async function detectBarcode(){
+    if(!detector || !video.videoWidth) return null;
+    try{
+      var codes=await detector.detect(video);
+      if(codes && codes.length && codes[0].rawValue) return codes[0].rawValue;
+    }catch(e){}
+    return null;
+  }
 
-    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
-      showError('Камера недоступна в цьому браузері');
+  function detectJsQR(){
+    if(!window.jsQR || !video.videoWidth) return null;
+    var vw=video.videoWidth, vh=video.videoHeight;
+    var maxW=960, scale=vw>maxW ? maxW/vw : 1;
+    var cw=Math.max(1,Math.floor(vw*scale)), ch=Math.max(1,Math.floor(vh*scale));
+    scanCanvas.width=cw; scanCanvas.height=ch;
+    scanCtx.drawImage(video,0,0,cw,ch);
+    var imageData=scanCtx.getImageData(0,0,cw,ch);
+    var code=jsQR(imageData.data,cw,ch,{inversionAttempts:'attemptBoth'});
+    return code && code.data ? code.data : null;
+  }
+
+  async function tick(){
+    if(!scanning) return;
+    try{
+      var found=await detectBarcode();
+      if(!found) found=detectJsQR();
+      if(found){showResult(found); return;}
+    }catch(e){console.warn('QR scan:',e);}
+    if(scanning) rafId=requestAnimationFrame(tick);
+  }
+
+  async function openScanner(){
+    overlay.style.display='flex';
+    overlay.classList.add('open');
+    resultBox.style.display='none';
+    hint.style.display='';
+    hint.textContent='Наведіть камеру на QR-код';
+    stopStream();
+
+    if(!window.isSecureContext){
+      showError('Камера працює лише через HTTPS. Відкрийте застосунок через GitHub Pages.');
       return;
     }
-
-    var constraints = {
-      video: {
-        facingMode: { ideal: 'environment' },
-        width: { ideal: 1280 },
-        height: { ideal: 720 }
-      },
-      audio: false
-    };
-
-    navigator.mediaDevices.getUserMedia(constraints).then(function(stream){
-      mediaStream = stream;
-      video.setAttribute('playsinline', 'true');
-      video.muted = true;
-      video.srcObject = stream;
-      function beginScan(){
-        if(scanning) return;
-        scanning = true;
-        rafId = requestAnimationFrame(tick);
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+      showError('Цей браузер не підтримує доступ до камери.');
+      return;
+    }
+    try{
+      mediaStream=await navigator.mediaDevices.getUserMedia({
+        video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},
+        audio:false
+      });
+      video.srcObject=mediaStream;
+      video.setAttribute('playsinline','true');
+      video.muted=true;
+      await video.play();
+      if('BarcodeDetector' in window){
+        try{
+          var formats=await BarcodeDetector.getSupportedFormats();
+          if(formats.indexOf('qr_code')!==-1) detector=new BarcodeDetector({formats:['qr_code']});
+        }catch(e){detector=null;}
       }
-      video.onloadedmetadata = function(){
-        var p = video.play();
-        if(p && p.then){
-          p.then(beginScan).catch(function(){ beginScan(); });
-        } else {
-          beginScan();
-        }
-      };
-      // fallback if metadata already loaded
-      if(video.readyState >= 1){
-        video.play().then(beginScan).catch(function(){ beginScan(); });
-      }
-    }).catch(function(err){
+      scanning=true;
+      rafId=requestAnimationFrame(tick);
+    }catch(err){
       console.error(err);
-      showError('Немає доступу до камери. Дозвольте доступ у налаштуваннях браузера.');
-    });
+      stopStream();
+      if(err && (err.name==='NotAllowedError' || err.name==='PermissionDeniedError'))
+        showError('Доступ до камери заборонено. Дозвольте камеру для цього сайту.');
+      else if(err && err.name==='NotFoundError')
+        showError('Камеру не знайдено на цьому пристрої.');
+      else
+        showError('Не вдалося запустити камеру. Перевірте дозвіл браузера.');
+    }
   }
 
-  scanBtn.addEventListener('click', openScanner);
-  closeBtn.addEventListener('click', closeScanner);
-  rescanBtn.addEventListener('click', function(){
-    resultBox.style.display = 'none';
-    hint.style.display = '';
-    hint.textContent = 'Наведіть камеру на QR-код';
-    if(!mediaStream){
-      openScanner();
-    } else {
-      scanning = true;
-      rafId = requestAnimationFrame(tick);
-    }
+  scanBtn.addEventListener('click',openScanner);
+  closeBtn.addEventListener('click',closeScanner);
+  rescanBtn.addEventListener('click',function(){
+    resultBox.style.display='none';
+    openScanner();
   });
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden && overlay.classList.contains('open')) stopStream();
+  });
+
 
 
   if('serviceWorker' in navigator){
@@ -1672,7 +1496,7 @@
         });
       }
     }).then(function(){
-      return navigator.serviceWorker.register('sw.js?v=5');
+      return navigator.serviceWorker.register('sw.js?v=4');
     }).catch(function(e){ console.log('SW reg failed', e); });
   }
 
