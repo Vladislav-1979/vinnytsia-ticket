@@ -1,10 +1,12 @@
-const CACHE = 'vinnytsia-ticket-v4';
+const CACHE = 'vinnytsia-ticket-v5';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
+  './machine.png',
+  './result-logo.png',
   './icon-180.png',
   'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.js'

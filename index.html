@@ -50,15 +50,15 @@
   }
   #pagesStrip{
     display:flex;
-    width:300%;
+    width:400%;
     height:100%;
     transition:transform .32s cubic-bezier(.4,0,.2,1);
-    transform:translateX(-66.6667%);
+    transform:translateX(-50%);
   }
   .page{
-    width:33.3333%;
+    width:25%;
     height:100%;
-    flex:0 0 33.3333%;
+    flex:0 0 25%;
     display:flex;
     flex-direction:column;
     padding:calc(10px + env(safe-area-inset-top)) 16px calc(10px + env(safe-area-inset-bottom));
@@ -755,6 +755,65 @@
     color:var(--brand);
   }
 
+
+
+  /* ---------- Page: Оплата ---------- */
+  .payment-page{position:relative;padding:0 24px calc(12px + env(safe-area-inset-bottom));gap:0;background:#14171a;}
+  .payment-topbar{height:110px;padding-top:calc(14px + env(safe-area-inset-top));display:flex;align-items:flex-start;justify-content:space-between;}
+  .payment-close,.payment-share{border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#f2f3f2;}
+  .payment-close{width:40px;height:40px;background:transparent;font-size:38px;font-weight:300;line-height:1;padding:0;}
+  .payment-share{width:60px;height:60px;border-radius:50%;background:#666a69;margin-top:-2px;}
+  .payment-share svg{width:31px;height:31px;}
+  .payment-heading{display:flex;flex-direction:column;align-items:center;flex:0 0 auto;margin-top:0;}
+  .payment-machine{width:58px;height:58px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#25204f;margin-bottom:10px;}
+  .payment-machine img{width:100%;height:100%;object-fit:cover;display:block;}
+  .payment-title{font-size:26px;font-weight:500;line-height:1.2;margin:0;color:#f4f5f4;}
+  .payment-amount{margin-top:34px;background:#222324;border-radius:14px;padding:31px 20px 30px;text-align:center;}
+  .payment-amount .amount{font-size:28px;font-weight:500;letter-spacing:.2px;}
+  .payment-amount .stamp{margin-top:14px;font-size:19px;color:#969897;font-variant-numeric:tabular-nums;}
+  .payment-card{margin-top:24px;background:#222324;border-radius:14px;padding:28px 24px 31px;}
+  .payment-row{display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:19px;}
+  .payment-row+.payment-row{margin-top:34px;}
+  .payment-muted{color:#9a9c9b;}
+  .payment-green{color:#f1f2f1;}
+  .payment-card-line{display:flex;align-items:center;gap:8px;margin-top:34px;font-size:19px;}
+  .visa{font-style:italic;font-weight:800;letter-spacing:-1px;font-size:21px;}
+  .masked{letter-spacing:1.5px;font-variant-numeric:tabular-nums;}
+  .payment-chevron{color:#59c532;font-size:38px;line-height:1;margin-left:auto;}
+  .payment-payout{margin-top:10px;font-size:18px;color:#f0f1f0;}
+  .payment-balance{margin-top:26px;background:#222324;border-radius:14px;padding:29px 24px;display:flex;align-items:center;justify-content:space-between;font-size:19px;}
+  .balance-dots{letter-spacing:3px;font-size:20px;}
+  .eye-off{width:31px;height:31px;color:#59c532;flex:0 0 auto;}
+  .payment-category{margin-top:25px;background:#222324;border-radius:14px;padding:29px 24px;font-size:19px;display:flex;justify-content:space-between;}
+  .payment-help{margin-top:25px;background:#222324;border-radius:14px;padding:25px 24px;display:flex;align-items:center;gap:18px;font-size:19px;}
+  .help-icon{width:54px;height:54px;border-radius:50%;background:#1c4b22;color:#59c532;display:flex;align-items:center;justify-content:center;font-size:27px;}
+  .payment-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding-bottom:20px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .payment-scroll::-webkit-scrollbar{display:none;}
+  .payment-content{padding-bottom:20px;}
+
+  /* ---------- Cross-device QR result ---------- */
+  #resultScreen{position:absolute;inset:0;background:#14171a;z-index:90;display:none;overflow-y:auto;padding:calc(16px + env(safe-area-inset-top)) 30px calc(28px + env(safe-area-inset-bottom));}
+  #resultScreen.open{display:block;}
+  .result-head{display:flex;align-items:flex-start;gap:14px;}
+  .result-logo{width:76px;height:76px;object-fit:contain;flex:0 0 auto;border-radius:4px;}
+  .result-company{padding-top:4px;}
+  .result-city{font-size:25px;line-height:1.1;margin-bottom:12px;}
+  .result-company-name{font-size:19px;line-height:1.25;color:#f3f4f3;}
+  .result-series,.result-wagon{font-size:18px;line-height:1.45;margin-top:7px;}
+  .result-valid{text-align:center;font-size:29px;font-weight:600;line-height:1.2;margin-top:74px;}
+  .result-check{width:170px;height:170px;margin:22px auto 0;border-radius:50%;background:#2fc335;box-shadow:inset 0 0 0 5px rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:white;font-size:104px;font-weight:300;}
+  .result-timer{margin-top:32px;text-align:center;font-size:31px;font-weight:700;color:#58d132;font-variant-numeric:tabular-nums;letter-spacing:.5px;}
+  .result-demo{margin-top:94px;text-align:center;font-size:88px;line-height:1;font-weight:900;color:#ff0022;letter-spacing:-3px;}
+  .result-qr-btn{margin-top:118px;width:100%;border:0;border-radius:14px;background:#59cf25;color:#071207;font-size:20px;font-weight:600;padding:18px 10px;cursor:pointer;}
+  .result-expired{color:#ff5c5c !important;}
+
+  @media (max-width:480px){
+    .payment-page{padding-left:24px;padding-right:24px;}
+    .payment-title{font-size:25px;}
+    .payment-amount .amount{font-size:27px;}
+    .payment-amount .stamp,.payment-row,.payment-balance,.payment-category,.payment-help,.payment-payout{font-size:18px;}
+  }
+
 </style>
 </head>
 <body>
@@ -763,7 +822,7 @@
 
     <!-- ============ PAGE 0: Ще сервіси ============ -->
     <div class="page" id="pageServices">
-      <div class="services-title">Ще сервіси</div>
+      <button class="services-title" id="moreServicesBtn" type="button">Ще сервіси</button>
 
       <div class="fx-card">
         <div class="fx-top"><span>Курс валют для карток</span><span class="buy">Купити &rsaquo;</span></div>
@@ -983,6 +1042,52 @@
 
   </div>
 
+
+
+    <!-- ============ PAGE 3: Оплата ============ -->
+    <div class="page payment-page" id="pagePayment">
+      <div class="payment-topbar">
+        <button class="payment-close" id="paymentClose" aria-label="Закрити">×</button>
+        <button class="payment-share" id="paymentShare" aria-label="Поділитися">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="24.5" cy="6.5" r="3.5"/><circle cx="7.5" cy="16" r="3.5"/><circle cx="24.5" cy="25.5" r="3.5"/>
+            <path d="M10.6 14.4 21.4 8.2M10.6 17.6l10.8 6.2"/>
+          </svg>
+        </button>
+      </div>
+      <div class="payment-scroll">
+        <div class="payment-heading">
+          <div class="payment-machine"><img src="machine.png" alt="machine"></div>
+          <h1 class="payment-title">Міський транспорт</h1>
+        </div>
+
+        <div class="payment-content">
+          <div class="payment-amount">
+            <div class="amount">−25.00 UAH</div>
+            <div class="stamp"><span id="paymentDate">--.--.----</span>, <span id="paymentTime">--:--:--</span></div>
+          </div>
+
+          <div class="payment-card">
+            <div class="payment-row"><span class="payment-muted">Статус</span><span class="payment-green">Успішно</span></div>
+            <div class="payment-row"><span class="payment-muted">З картки</span><span class="payment-chevron">›</span></div>
+            <div class="payment-card-line"><span class="visa">VISA</span><span class="masked">4149 · · · · · · · 7621</span></div>
+            <div class="payment-payout">Картка для виплат</div>
+          </div>
+
+          <div class="payment-balance">
+            <span class="payment-muted">Залишок</span>
+            <span class="balance-dots">· · · · · · · UAH</span>
+            <svg class="eye-off" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 16s4.5-7 13-7 13 7 13 7-4.5 7-13 7S3 16 3 16Z"/><path d="M5 5 27 27"/><path d="M12.2 12.2a5.2 5.2 0 0 0 7.6 7.6"/>
+            </svg>
+          </div>
+
+          <div class="payment-category"><span class="payment-muted">Категорія</span><span>Транспорт</span></div>
+          <div class="payment-help"><span class="help-icon">•••</span><span>Допомога Онлайн</span></div>
+        </div>
+      </div>
+    </div>
+
   <div class="scanner-overlay" id="scannerOverlay" style="position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
     <video id="scannerVideo" autoplay playsinline muted style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;"></video>
     <div style="position:absolute;top:calc(14px + env(safe-area-inset-top));left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:3;">
@@ -1003,6 +1108,25 @@
     </div>
   </div>
 
+
+
+  <!-- Cross-device QR result screen -->
+  <div id="resultScreen" aria-label="Результат">
+    <div class="result-head">
+      <img class="result-logo" src="result-logo.png" alt="Вінницька транспортна компанія">
+      <div class="result-company">
+        <div class="result-city">Вінниця</div>
+        <div class="result-company-name">КП Вінницька транспортна компанія</div>
+        <div class="result-series">Серія <span id="resultSeries">950248845</span></div>
+        <div class="result-wagon">Вагон №<span id="resultWagon">305</span></div>
+      </div>
+    </div>
+    <div class="result-valid">Квиток дійсний<br>до <span id="resultValidDate">--.--.----</span></div>
+    <div class="result-check">✓</div>
+    <div class="result-timer" id="resultTimer">00:00:00</div>
+    <div class="result-demo">DEMO</div>
+    <button class="result-qr-btn" id="resultScanBtn">⌗ Сканувати QR-код</button>
+  </div>
 
   <!-- Info / Про компанію screen -->
   <div id="infoOverlay">
@@ -1058,12 +1182,14 @@
   var pageLevel = 2;
   function setPage(level){
     pageLevel = level;
-    pagesStrip.style.transform = 'translateX(-' + (level * 33.3333) + '%)';
+    pagesStrip.style.transform = 'translateX(-' + (level * 25) + '%)';
   }
   document.getElementById('backFromArchive').addEventListener('click', function(){ setPage(1); });
   document.getElementById('backFromTransport').addEventListener('click', function(){ setPage(0); });
   document.getElementById('cityTransportRow').addEventListener('click', function(){ setPage(2); });
   document.getElementById('svcTransportTile').addEventListener('click', function(){ setPage(1); });
+  document.getElementById('moreServicesBtn').addEventListener('click', function(){ setPage(3); });
+  document.getElementById('paymentClose').addEventListener('click', function(){ setPage(2); });
 
   // ---------- Tabs (block 1): sliding highlight + screen transition ----------
   var tabsWrap = document.querySelector('.tabs');
@@ -1205,9 +1331,12 @@
     parts.forEach(function(p){ map[p.type] = p.value; });
     return map;
   }
-  var kyiv = getKyivParts();
+  var sessionOpenedAt = Date.now();
+  var kyiv = getKyivParts(new Date(sessionOpenedAt));
   document.getElementById('dateVal').textContent = kyiv.day + '.' + kyiv.month + '.' + kyiv.year;
   document.getElementById('timeVal').textContent = kyiv.hour + ':' + kyiv.minute + ':' + kyiv.second;
+  document.getElementById('paymentDate').textContent = kyiv.day + '.' + kyiv.month + '.' + kyiv.year;
+  document.getElementById('paymentTime').textContent = kyiv.hour + ':' + kyiv.minute + ':' + kyiv.second;
 
   // ---------- Countdown: real elapsed time, survives tab switches/screen lock while page lives ----------
   var countdownEl = document.getElementById('countdown');
@@ -1261,7 +1390,9 @@
     var wagonEl = document.getElementById('wagonVal');
     var serial = serialEl ? serialEl.textContent : '000000000';
     var wagon = wagonEl ? wagonEl.textContent : '000';
-    return 'VN-TICKET|SERIES:' + serial + '|WAGON:' + wagon + '|DATE:' + kyiv.day+kyiv.month+kyiv.year + '|TIME:' + kyiv.hour+kyiv.minute+kyiv.second;
+    var base = window.location.origin + window.location.pathname;
+    var params = new URLSearchParams({result:'1',series:serial,wagon:wagon,opened:String(sessionOpenedAt)});
+    return base + '?' + params.toString();
   }
 
   function updateQR(){
@@ -1302,6 +1433,10 @@
   document.getElementById('archWagon1').textContent = randomWagon();
   document.getElementById('archSerial2').textContent = randomDigits(9);
   document.getElementById('archWagon2').textContent = randomWagon();
+  // The active ticket/QR use the same series and wagon as the first archive ticket.
+  document.getElementById('serialVal').textContent = document.getElementById('archSerial1').textContent;
+  document.getElementById('wagonVal').textContent = document.getElementById('archWagon1').textContent;
+  updateQR();
 
   function yesterdayKyivDate(){
     var now = getKyivParts();
@@ -1485,6 +1620,74 @@
 
 
 
+  // ---------- Cross-device QR result ----------
+  var resultScreen = document.getElementById('resultScreen');
+  var resultSeries = document.getElementById('resultSeries');
+  var resultWagon = document.getElementById('resultWagon');
+  var resultValidDate = document.getElementById('resultValidDate');
+  var resultTimer = document.getElementById('resultTimer');
+  var resultTimerId = null;
+
+  function kyivDateStringFromMs(ms){
+    var p=getKyivParts(new Date(ms));
+    return p.day+'.'+p.month+'.'+p.year;
+  }
+  function nextKyivMidnightMs(fromMs){
+    // Build the next midnight in Kyiv by finding the next Kyiv calendar date,
+    // then converting the displayed date through a noon anchor and offset.
+    var parts=getKyivParts(new Date(fromMs));
+    var y=+parts.year, m=+parts.month, d=+parts.day;
+    var probe=new Date(Date.UTC(y,m-1,d,12,0,0));
+    probe.setUTCDate(probe.getUTCDate()+1);
+    var targetY=probe.getUTCFullYear(), targetM=probe.getUTCMonth()+1, targetD=probe.getUTCDate();
+    // Determine Kyiv UTC offset at the target date using Intl.
+    var guess=Date.UTC(targetY,targetM-1,targetD,0,0,0);
+    var gp=getKyivParts(new Date(guess));
+    var asUtc=Date.UTC(+gp.year,+gp.month-1,+gp.day,+gp.hour,+gp.minute,+gp.second);
+    var offset=asUtc-guess;
+    return guess-offset;
+  }
+  function renderResultTimer(openedAt){
+    var now=Date.now();
+    var midnight=nextKyivMidnightMs(openedAt);
+    var remaining=Math.max(0, midnight-now);
+    var total=Math.floor(remaining/1000);
+    var hh=Math.floor(total/3600), mm=Math.floor((total%3600)/60), ss=total%60;
+    resultTimer.textContent=pad(hh)+':'+pad(mm)+':'+pad(ss);
+    resultTimer.classList.toggle('result-expired', remaining<=0);
+    if(resultTimerId) clearTimeout(resultTimerId);
+    if(remaining>0) resultTimerId=setTimeout(function(){renderResultTimer(openedAt);},250);
+  }
+  function openResultFromQuery(){
+    var q=new URLSearchParams(window.location.search);
+    if(q.get('result')!=='1') return false;
+    var series=(q.get('series')||'000000000').replace(/[^0-9]/g,'').slice(0,9).padStart(9,'0');
+    var wagon=(q.get('wagon')||'000').replace(/[^0-9]/g,'').slice(0,3).padStart(3,'0');
+    var opened=Number(q.get('opened'));
+    if(!Number.isFinite(opened) || opened<=0) opened=Date.now();
+    resultSeries.textContent=series;
+    resultWagon.textContent=wagon;
+    resultValidDate.textContent=kyivDateStringFromMs(nextKyivMidnightMs(opened));
+    resultScreen.classList.add('open');
+    renderResultTimer(opened);
+    return true;
+  }
+  openResultFromQuery();
+  document.getElementById('paymentShare').addEventListener('click', async function(){
+    var url=buildQRData();
+    try{
+      if(navigator.share){ await navigator.share({title:'Міський транспорт',url:url}); }
+      else if(navigator.clipboard){ await navigator.clipboard.writeText(url); alert('Посилання скопійовано'); }
+    }catch(e){}
+  });
+  document.getElementById('resultScanBtn').addEventListener('click', function(){
+    resultScreen.classList.remove('open');
+    if(resultTimerId){clearTimeout(resultTimerId);resultTimerId=null;}
+    if(window.history && history.replaceState) history.replaceState({},'',window.location.pathname);
+    document.getElementById('scanBtn').click();
+  });
+
+
   if('serviceWorker' in navigator){
     // Force update: unregister old workers, then register new with cache-bust
     navigator.serviceWorker.getRegistrations().then(function(regs){
@@ -1496,7 +1699,7 @@
         });
       }
     }).then(function(){
-      return navigator.serviceWorker.register('sw.js?v=4');
+      return navigator.serviceWorker.register('sw.js?v=5');
     }).catch(function(e){ console.log('SW reg failed', e); });
   }
 
